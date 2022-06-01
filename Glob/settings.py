@@ -16,6 +16,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIRS = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 
@@ -30,6 +31,33 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 360,
+    "width": 750,
+    "cleanup_on_startup": True,
+    "custom_undo_redo_levels": 20,
+    "selector": 'textarea',
+    "theme": 'modern',
+    "plugins": '''
+              textcolor save link image media preview codesample contextmenu
+              table code lists fullscreen insertdatetime nonbreaking contextmenu directionality
+              searchreplace wordcount visualblocks visualchars code fullscreen autolink
+              lists charmap print hr anchor pagebreak 
+               ''',
+    "toolbar1":'''
+               fullscreen preview bold italic underline | fontselect, 
+               fontsizeselect | forecolor backcolor | alignleft alignright |
+               aligncenter alignjustify | indent outdent | bullist numlist table |
+               | link image media | codesample |
+               ''',
+    "toolbar2": '''
+                visualblocks visualchars |
+                charmap hr pagebreak nonbreaking anchor | code |
+                ''',
+    "contextmenu": 'formats | link image',
+    "menubar": True,
+    "statusbar": True,
+    }
 
 # Application definition
 
@@ -41,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +87,7 @@ ROOT_URLCONF = 'Glob.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [TEMPLATES_DIRS],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

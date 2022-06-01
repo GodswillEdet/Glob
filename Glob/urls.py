@@ -4,4 +4,5 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('blog.urls')),
     path('gash/', admin.site.urls),
+    path('tinymce/', include('tinymce.urls')),
 ]
