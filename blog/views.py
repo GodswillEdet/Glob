@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
-def homepage(request, tag_slug=None):
+def homepage(request):
     posts = Post.published.all()
+
 
     paginator = Paginator(posts, 4)
     page = request.GET.get("page")
@@ -25,3 +26,11 @@ def homepage(request, tag_slug=None):
         posts = Post.published.filter(Q(title__icontains=query) | Q(tags__name__icontains=query)).distinct()
     '''
     return render(request, 'blog/post_list.html', {'posts': posts, 'page': page})
+
+def post_detail(request, post):
+    post = get_object_or_404(Post, slug=post, status='published')
+    return render(request, 'blog/post_detail.html', {'post':post})
+
+def login_request(request):
+    if request.method == 'POST':
+        form = A
